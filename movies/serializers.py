@@ -1,13 +1,50 @@
 from rest_framework import serializers
 from rest_framework.relations import StringRelatedField
 
-from .models import Movie, Series, Seasons, MoviesGenresItem, SeriesGenresItem, MoviesGenres, Episodes, SeriesGenres
+from .models import Movie, Series, Seasons, Cast, MoviesGenresItem, SeriesGenresItem, MoviesGenres, Episodes, \
+    SeriesGenres,People
+
+
+class PeopleSerializer(serializers.ModelSerializer):
+
+    cast=serializers.HyperlinkedRelatedField(
+        many=True,
+        view_name='cast-detail',
+        read_only=True,
+    )
+    class Meta:
+        model = People
+        fields = [ 'job','cast']
+class PeoplesmovieSerializer(serializers.ModelSerializer):
+
+    films=serializers.HyperlinkedRelatedField(
+        many=True,
+        view_name='movie-detail',
+        read_only=True,
+    )
+    episode=serializers.HyperlinkedRelatedField(
+        many=True,
+        view_name='movie-detail',
+        read_only=True,
+    )
+    class Meta:
+        model = People
+        fields = [ 'films','episode']
+class CastSerializer(serializers.ModelSerializer):
+
+    people_set=PeoplesmovieSerializer(many=True)
+    class Meta:
+        model = Cast
+        fields = ['id','first_name','last_name','about','age','gender','people_set']
+
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    people_set = PeopleSerializer(many=True)
+
     class Meta:
         model = Movie
-        fields = '__all__'
+        fields = ['title','description','release_date','people_set']
 
 
 class SeriesSerializer(serializers.ModelSerializer):
@@ -31,10 +68,14 @@ class SeasonSerializer(serializers.ModelSerializer):
         fields = ['id', 'season_number', 'series', 'episodes_set']
 
 
+
+
+
 class EpisodesSerializer(serializers.ModelSerializer):
+    people_set = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='people-detail')
     class Meta:
         model = Episodes
-        fields = ['id', 'title', 'create_at', ]
+        fields = ['id', 'title', 'create_at','people_set']
 
 
 class MovieGenreRealationSerializer(serializers.ModelSerializer):

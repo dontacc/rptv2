@@ -1,7 +1,5 @@
 from django.contrib import admin
-from django.db.models import Count
-
-from .models import Movie,Seasons,Episodes,MoviesGenres,SeriesGenres
+from .models import Movie,Seasons,Episodes,MoviesGenres,SeriesGenres,People,Series
 
 
 @admin.register(SeriesGenres)
@@ -12,19 +10,25 @@ class ChapterAdmin(admin.ModelAdmin):
     pass
 @admin.register(Seasons)
 class SeasonAdmin(admin.ModelAdmin):
-    # list_display = ['season']
+
     pass
-# class ChapterInLine(admin.TabularInline):
-#     model = Season
-#     extra = 0
+@admin.register(People)
+class SeasonAdmin(admin.ModelAdmin):
+
+    pass
 @admin.register(Episodes)
-class MovieAdmin(admin.ModelAdmin):
+class SeasonAdmin(admin.ModelAdmin):
+
     pass
-    # list_display = ['title','description','seasons_count']
-    # list_per_page = 10
-    # inlines = [ChapterInLine]
-    # def seasons_count(self,movie):
-    #     return movie.season_set
+class PeopleInLine(admin.TabularInline):
+    model = People
+    extra = 0
+
+@admin.register(Movie)
+class CrewsAdmin(admin.ModelAdmin):
+    inlines = [PeopleInLine]
+
+
 
 
 

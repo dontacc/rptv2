@@ -62,18 +62,27 @@ class SeriesGenres(models.Model):
     genre_item = models.ManyToManyField(SeriesGenresItem)
 
 
-class Actor(models.Model):
+class Cast(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    WOMAN = 'W'
+    MAN = 'M'
+    GENDER_CHOICES = [
+        (WOMAN, 'Woman'),
+        (MAN, 'Man')
+    ]
     about = models.TextField()
     age = models.PositiveIntegerField()
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=None)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
 
-class Crews(models.Model):
-    movie = models.ManyToManyField(Movie)
-    season = models.ManyToManyField(Seasons)
-    episode = models.ManyToManyField(Episodes)
-    actor = models.ManyToManyField(Actor)
+class People(models.Model):
+    job = models.CharField(max_length=255)
+    cast = models.ManyToManyField(Cast)
+    episodes = models.ManyToManyField(Episodes, blank=True,related_name='episode')
+    films = models.ManyToManyField(Movie,blank=True,related_name='films')
+    movie = models.ForeignKey(Movie,on_delete=models.PROTECT,null=True,blank=True)
+    series = models.ForeignKey(Episodes, on_delete=models.PROTECT,null=True,blank=True,related_name='series')

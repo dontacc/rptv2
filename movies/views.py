@@ -1,13 +1,14 @@
 from .serializers import MovieSerializer, SeriesSerializer, EpisodesSerializer, MovieGenreItemSerializer, \
-    SeasonSerializer,SeriesGenreItemSerializer
-from .models import Movie, Series, Seasons, MoviesGenresItem,SeriesGenresItem, MoviesGenres, Episodes,SeriesGenres
+    SeasonSerializer, SeriesGenreItemSerializer,CastSerializer,PeopleSerializer
+from .models import Movie, Series, Seasons, MoviesGenresItem,SeriesGenresItem, Cast, Episodes, SeriesGenres,People
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 
 class MoviesViewSet(ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
-
+    # for q in queryset:
+    #     print(q.)
     def get_serializer_context(self):
         return {'request': self.request}
 
@@ -32,6 +33,7 @@ class EpisodeViewSet(ModelViewSet):
     queryset = Episodes.objects.all()
     serializer_class = EpisodesSerializer
 
+
     def get_serializer_context(self):
         return {'request': self.request}
 
@@ -51,3 +53,18 @@ class SeriesGenreItemViewSet(ReadOnlyModelViewSet):
     def get_serializer_context(self):
         return {'request': self.request}
 
+
+
+class CastViewSet(ModelViewSet):
+    queryset = Cast.objects.all()
+    serializer_class = CastSerializer
+
+    def get_serializer_context(self):
+        return {'request': self.request}
+
+class PeopleViewSet(ModelViewSet):
+    queryset = People.objects.all()
+    serializer_class = PeopleSerializer
+
+    def get_serializer_context(self):
+        return {'request': self.request}
