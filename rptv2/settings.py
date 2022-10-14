@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ueggptl@m!7cz$#5m2lqyoc%%#e_$)cd*$6j_h^=&_ib@jsi5j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rptv2.herokuapp.com','127.0.0.1']
 
 
 # Application definition
