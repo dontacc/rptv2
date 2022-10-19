@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'movies',
     'rest_framework',
+    'djoser',
     'account',
     # 'django_filters'
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -53,7 +56,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 ROOT_URLCONF = 'rptv2.urls'
 
 TEMPLATES = [
@@ -127,3 +134,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+# 'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ]
+}
+
+AUTH_USER_MODEL = 'core.User'
+
+DJOSER = {
+    'SERIALIZERS':{
+        'user_create': 'core.Serializers.UserCreateSerializer',
+        'current_user': 'core.Serializers.UserSerializer',
+    }
+}
+SIMPLE_JWT = {
+'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+}
