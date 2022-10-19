@@ -1,13 +1,14 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import Customer,Order
 
 
-class CustomerSerializers(ModelSerializer):
+class CustomerSerializers(serializers.ModelSerializer):
+    user_id=serializers.IntegerField(read_only=True)
     class Meta:
         model=Customer
-        fields=['first_name','last_name','email','phone']
+        fields=['id','user_id','phone']
 
-class OrderSerializers(ModelSerializer):
+class OrderSerializers(serializers.ModelSerializer):
     class Meta:
         model=Order
         fields=['type','payment_status','customer']

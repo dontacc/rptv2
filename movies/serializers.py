@@ -37,14 +37,33 @@ class CastSerializer(serializers.ModelSerializer):
         model = Cast
         fields = ['id','first_name','last_name','about','age','gender','people_set']
 
+class MovieGenreRealationSerializer(serializers.ModelSerializer):
+    movies = serializers.HyperlinkedRelatedField(
+        queryset=Movie.objects.all(),
+        view_name='movie-detail'
 
-
-class MovieSerializer(serializers.ModelSerializer):
-    people_set = PeopleSerializer(many=True)
+    )
 
     class Meta:
+        model = MoviesGenres
+        fields = ['movies']
+
+class MovieGenreItemSerializer(serializers.ModelSerializer):
+    moviesgenres_set = MovieGenreRealationSerializer(many=True)
+
+    class Meta:
+        model = MoviesGenresItem
+        fields = ['title', 'moviesgenres_set']
+class MovieGenreItemRelatedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MoviesGenresItem
+        fields = ['title']
+class MovieSerializer(serializers.ModelSerializer):
+    people_set = PeopleSerializer(many=True)
+    genre=MovieGenreItemRelatedSerializer(many=True)
+    class Meta:
         model = Movie
-        fields = ['title','description','release_date','people_set']
+        fields = ['title','description','release_date','genre','people_set']
 
 
 class SeriesSerializer(serializers.ModelSerializer):
@@ -78,24 +97,10 @@ class EpisodesSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'create_at','people_set']
 
 
-class MovieGenreRealationSerializer(serializers.ModelSerializer):
-    movies = serializers.HyperlinkedRelatedField(
-        queryset=Movie.objects.all(),
-        view_name='movie-detail'
-
-    )
-
-    class Meta:
-        model = MoviesGenres
-        fields = ['movies']
 
 
-class MovieGenreItemSerializer(serializers.ModelSerializer):
-    moviesgenres_set = MovieGenreRealationSerializer(many=True)
 
-    class Meta:
-        model = MoviesGenresItem
-        fields = ['title', 'moviesgenres_set']
+
 
 
 class seriesGenreRealationSerializer(serializers.ModelSerializer):

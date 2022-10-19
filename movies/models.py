@@ -2,11 +2,28 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 
 
+class MoviesGenresItem(models.Model):
+    title = models.CharField(max_length=255)
+    movies=models.ForeignKey('Movie',on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return self.title
+
+
+class SeriesGenresItem(models.Model):
+    title = models.CharField(max_length=255)
+    movies=models.ForeignKey('Series',on_delete=models.SET_NULL,null=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     release_date = models.CharField(max_length=255)
-
+    genre=models.ManyToManyField(MoviesGenresItem)
     def __str__(self):
         return self.title
 
@@ -16,9 +33,18 @@ class Series(models.Model):
     description = models.CharField(max_length=255)
     start_at = models.CharField(max_length=255)
     end_at = models.CharField(max_length=255)
+    genre=models.ManyToManyField(SeriesGenresItem)
 
     def __str__(self):
         return self.title
+class MoviesGenres(models.Model):
+    movies = models.ForeignKey(Movie, on_delete=models.PROTECT)
+    genre_item = models.ManyToManyField(MoviesGenresItem)
+
+
+class SeriesGenres(models.Model):
+    series = models.ForeignKey(Series, on_delete=models.PROTECT)
+    genre_item = models.ManyToManyField(SeriesGenresItem)
 
 
 class Seasons(models.Model):
@@ -37,29 +63,6 @@ class Episodes(models.Model):
     def __str__(self):
         return self.title
 
-
-class MoviesGenresItem(models.Model):
-    title = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.title
-
-
-class SeriesGenresItem(models.Model):
-    title = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.title
-
-
-class MoviesGenres(models.Model):
-    movies = models.ForeignKey(Movie, on_delete=models.PROTECT)
-    genre_item = models.ManyToManyField(MoviesGenresItem)
-
-
-class SeriesGenres(models.Model):
-    series = models.ForeignKey(Series, on_delete=models.PROTECT)
-    genre_item = models.ManyToManyField(SeriesGenresItem)
 
 
 class Cast(models.Model):
