@@ -19,7 +19,7 @@ import debug_toolbar
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('movies.urls')),
-    path('api/', include('account.urls')),
+    path('user/', include('account.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
