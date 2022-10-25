@@ -1,14 +1,18 @@
+from rest_framework.generics import GenericAPIView
+from rest_framework.response import Response
 from .serializers import MovieSerializer, SeriesSerializer, EpisodesSerializer, MovieGenreItemSerializer, \
-    SeasonSerializer, SeriesGenreItemSerializer,CastSerializer,PeopleSerializer,MovieGenreItemRelatedSerializer
-from .models import Movie, Series, Seasons, MoviesGenresItem,SeriesGenresItem, Cast, Episodes, SeriesGenres,People
+    SeasonSerializer, SeriesGenreItemSerializer,CastSerializer,MovieGenreItemRelatedSerializer,CastSerializer,PeopleSerializer
+from .models import Movie, Series, Seasons, MoviesGenresItem,People,SeriesGenresItem, Cast, Episodes, SeriesGenres
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from .permission import IsAuthenticatedOrReadOnly
 from rest_framework import permissions
 # from rest_framework.permissions import
+
 class MoviesViewSet(ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
     def get_serializer_context(self):
         return {'request': self.request}
 
