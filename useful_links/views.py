@@ -1,19 +1,23 @@
-from django.shortcuts import render
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
-from rest_framework.response import Response
-from rest_framework import permissions
-from rest_framework.viewsets import ModelViewSet, GenericViewSet,ReadOnlyModelViewSet
-from .models import ContactUsQuestions,Collection
-from movies.permission import FullDjangoModelPermissions,IsAuthenticatedOrReadOnly
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from .models import QandASupport, RefundPolicy, Contact, PrivacyPolicy
 from . import Serializers
-from rest_framework.decorators import action
-# Create your views here.
-
-class Questions(ModelViewSet):
-    queryset = ContactUsQuestions.objects.select_related('collection').all()
-    serializer_class = Serializers.QuestionsSerializers
 
 
-class CollectionModelViewSet(ReadOnlyModelViewSet):
-    queryset = Collection.objects.all()
-    serializer_class = Serializers.CollectionSerializers
+class QandASupportModelViewSet(ModelViewSet):
+    queryset = QandASupport.objects.all()
+    serializer_class = Serializers.QandASupportSerializers
+
+
+class RefundPolicyModelViewSet(ReadOnlyModelViewSet):
+    queryset = RefundPolicy.objects.all()
+    serializer_class = Serializers.RefundPolicySerializers
+
+
+class ContactModelViewSet(ReadOnlyModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = Serializers.ContactSerializers
+
+
+class PrivacyPolicyViewSet(ReadOnlyModelViewSet):
+    queryset = PrivacyPolicy.objects.all()
+    serializer_class = Serializers.PrivacyPolicySerializers

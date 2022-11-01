@@ -1,23 +1,26 @@
 from rest_framework import serializers
-from .models import Collection,ContactUsQuestions
+from .models import QandASupport, RefundPolicy, Contact, PrivacyPolicy
 
-class CollectionSerializers(serializers.ModelSerializer):
+
+class QandASupportSerializers(serializers.ModelSerializer):
     class Meta:
-        model=Collection
-        fields=['id','title','explanation']
+        model = QandASupport
+        fields = '__all__'
 
-class QuestionsSerializers(serializers.ModelSerializer):
-    collection=serializers.HyperlinkedRelatedField(
-        # queryset=Collection.objects.all(),
-        # many=True,
-        view_name='collection-detail',
-        read_only=True
-    )
+
+class ContactSerializers(serializers.ModelSerializer):
     class Meta:
-        model=ContactUsQuestions
-        fields=['id','title','explanation','stars','collection']
+        model = Contact
+        fields = '__all__'
 
 
+class RefundPolicySerializers(serializers.ModelSerializer):
+    class Meta:
+        model = RefundPolicy
+        fields = '__all__'
 
 
-
+class PrivacyPolicySerializers(serializers.ModelSerializer):
+    class Meta:
+        model = PrivacyPolicy
+        fields = '__all__'

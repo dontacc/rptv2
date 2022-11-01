@@ -1,12 +1,22 @@
 from django.contrib import admin
-from .models import Collection,ContactUsQuestions
-#
-# class OrderInLine(admin.TabularInline):
-#     model = Order
+from . import models
 
-@admin.register(ContactUsQuestions)
+
+@admin.register(models.PrivacyPolicy)
 class CustomerAdmin(admin.ModelAdmin):
     pass
-@admin.register(Collection)
+
+
+@admin.register(models.RefundPolicy)
+class CustomerAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.Contact)
+class CustomerAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.QandASupport)
 class CustomerAdmin(admin.ModelAdmin):
     pass

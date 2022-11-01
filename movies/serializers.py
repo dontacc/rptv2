@@ -2,40 +2,45 @@ from rest_framework import serializers
 from rest_framework.relations import StringRelatedField
 
 from .models import Movie, Series, Seasons, Cast, MoviesGenresItem, SeriesGenresItem, MoviesGenres, Episodes, \
-    SeriesGenres,People
+    SeriesGenres, People
 
 
 class PeopleSerializer(serializers.ModelSerializer):
-
-    cast=serializers.HyperlinkedRelatedField(
+    cast = serializers.HyperlinkedRelatedField(
         many=True,
         view_name='cast-detail',
         read_only=True,
     )
+
     class Meta:
         model = People
-        fields = [ 'job','cast']
+        fields = ['job', 'cast']
+
+
 class PeoplesmovieSerializer(serializers.ModelSerializer):
+    films = serializers.HyperlinkedRelatedField(
+        many=True,
+        view_name='movie-detail',
+        read_only=True,
+    )
+    episode = serializers.HyperlinkedRelatedField(
+        many=True,
+        view_name='movie-detail',
+        read_only=True,
+    )
 
-    films=serializers.HyperlinkedRelatedField(
-        many=True,
-        view_name='movie-detail',
-        read_only=True,
-    )
-    episode=serializers.HyperlinkedRelatedField(
-        many=True,
-        view_name='movie-detail',
-        read_only=True,
-    )
     class Meta:
         model = People
-        fields = [ 'films','episode']
-class CastSerializer(serializers.ModelSerializer):
+        fields = ['films', 'episode']
 
-    people_set=PeoplesmovieSerializer(many=True)
+
+class CastSerializer(serializers.ModelSerializer):
+    people_set = PeoplesmovieSerializer(many=True)
+
     class Meta:
         model = Cast
-        fields = ['id','first_name','last_name','about','age','gender','people_set']
+        fields = ['id', 'first_name', 'last_name', 'about', 'age', 'gender', 'people_set']
+
 
 class MovieGenreRealationSerializer(serializers.ModelSerializer):
     movies = serializers.HyperlinkedRelatedField(
@@ -48,22 +53,28 @@ class MovieGenreRealationSerializer(serializers.ModelSerializer):
         model = MoviesGenres
         fields = ['movies']
 
+
 class MovieGenreItemSerializer(serializers.ModelSerializer):
     moviesgenres_set = MovieGenreRealationSerializer(many=True)
 
     class Meta:
         model = MoviesGenresItem
         fields = ['title', 'moviesgenres_set']
+
+
 class MovieGenreItemRelatedSerializer(serializers.ModelSerializer):
     class Meta:
         model = MoviesGenresItem
         fields = ['title']
+
+
 class MovieSerializer(serializers.ModelSerializer):
     people_set = PeopleSerializer(many=True)
-    genre=MovieGenreItemRelatedSerializer(many=True)
+    genre = MovieGenreItemRelatedSerializer(many=True)
+
     class Meta:
         model = Movie
-        fields = ['title','description','release_date','genre','people_set']
+        fields = ['title', 'description', 'release_date', 'genre', 'people_set', 'image']
 
 
 class SeriesSerializer(serializers.ModelSerializer):
@@ -75,7 +86,7 @@ class SeriesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Series
-        fields = ['id', 'title', 'description', 'start_at', 'end_at', 'seasons_set']
+        fields = ['id', 'title', 'description', 'start_at', 'end_at', 'seasons_set', 'image']
 
 
 class SeasonSerializer(serializers.ModelSerializer):
@@ -87,23 +98,15 @@ class SeasonSerializer(serializers.ModelSerializer):
         fields = ['id', 'season_number', 'series', 'episodes_set']
 
 
-
-
-
 class EpisodesSerializer(serializers.ModelSerializer):
     people_set = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='people-detail')
+
     class Meta:
         model = Episodes
-        fields = ['id', 'title', 'create_at','people_set']
+        fields = ['id', 'title', 'create_at', 'people_set']
 
 
-
-
-
-
-
-
-class seriesGenreRealationSerializer(serializers.ModelSerializer):
+class SeriesGenreRealationSerializer(serializers.ModelSerializer):
     series = serializers.HyperlinkedRelatedField(
         queryset=Series.objects.all(),
         view_name='series-detail'
@@ -116,7 +119,7 @@ class seriesGenreRealationSerializer(serializers.ModelSerializer):
 
 
 class SeriesGenreItemSerializer(serializers.ModelSerializer):
-    seriesgenres_set = seriesGenreRealationSerializer(many=True)
+    seriesgenres_set = SeriesGenreRealationSerializer(many=True)
 
     class Meta:
         model = SeriesGenresItem

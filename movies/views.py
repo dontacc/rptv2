@@ -1,12 +1,9 @@
-from rest_framework.generics import GenericAPIView
-from rest_framework.response import Response
 from .serializers import MovieSerializer, SeriesSerializer, EpisodesSerializer, MovieGenreItemSerializer, \
-    SeasonSerializer, SeriesGenreItemSerializer,CastSerializer,MovieGenreItemRelatedSerializer,CastSerializer,PeopleSerializer
-from .models import Movie, Series, Seasons, MoviesGenresItem,People,SeriesGenresItem, Cast, Episodes, SeriesGenres
+    SeasonSerializer, SeriesGenreItemSerializer, MovieGenreItemRelatedSerializer, CastSerializer, PeopleSerializer
+from .models import Movie, Series, Seasons, MoviesGenresItem, People, SeriesGenresItem, Cast, Episodes
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from .permission import IsAuthenticatedOrReadOnly
 from rest_framework import permissions
-# from rest_framework.permissions import
+
 
 class MoviesViewSet(ModelViewSet):
     queryset = Movie.objects.all()
@@ -21,6 +18,7 @@ class SeriesViewSet(ModelViewSet):
     queryset = Series.objects.all()
     serializer_class = SeriesSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
     def get_serializer_context(self):
         return {'request': self.request}
 
@@ -29,6 +27,7 @@ class SeasonViewSet(ModelViewSet):
     queryset = Seasons.objects.all()
     serializer_class = SeasonSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
     def get_serializer_context(self):
         return {'request': self.request}
 
@@ -60,7 +59,6 @@ class SeriesGenreItemViewSet(ReadOnlyModelViewSet):
         return {'request': self.request}
 
 
-
 class CastViewSet(ModelViewSet):
     queryset = Cast.objects.all()
     serializer_class = CastSerializer
@@ -69,6 +67,7 @@ class CastViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'request': self.request}
 
+
 class PeopleViewSet(ModelViewSet):
     queryset = People.objects.all()
     serializer_class = PeopleSerializer
@@ -76,6 +75,7 @@ class PeopleViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'request': self.request}
+
 
 class MovieGenreItemRelatedViewSet(ModelViewSet):
     queryset = MoviesGenresItem.objects.all()

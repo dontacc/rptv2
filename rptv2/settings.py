@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,33 +22,44 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ueggptl@m!7cz$#5m2lqyoc%%#e_$)cd*$6j_h^=&_ib@jsi5j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['rptv2.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken',
-    'debug_toolbar',
-    'movies',
     'rest_framework',
-    'djoser',
-    'account',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'debug_toolbar',
+    'dj_rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+    'drf_yasg',
+    'phonenumbers',
+    'movies',
+    'accounts',
     'core',
     'useful_links',
-    'match'
+    'match',
+    'likes',
+    'message'
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -57,9 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 INTERNAL_IPS = [
-    # ...
     "127.0.0.1",
-    # ...
 ]
 ROOT_URLCONF = 'rptv2.urls'
 
@@ -82,6 +91,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'rptv2.wsgi.application'
 
+#
+# AUTHENTICATION_BACKENDS = [
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
+#
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -125,33 +142,39 @@ STATIC_ROOT=BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
-'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+
 }
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'core.Serializers.CustomRegisterSerializer',
+}
+ACCOUNT_ADAPTER = 'core.Serializers.CustomAccountAdapter'
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'access'
+JWT_AUTH_REFRESH_COOKIE = 'refresh'
 
 AUTH_USER_MODEL = 'core.User'
 
-DJOSER = {
-    "USER_CREATE_PASSWORD_RETYPE": True,
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    'SERIALIZERS':{
-        'user_create': 'core.Serializers.UserCreateSerializer',
-        'current_user': 'core.Serializers.UserSerializer',
 
-          }
-}
 SIMPLE_JWT = {
+
 'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+'USER_ID_FIELD': 'uid',
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
 }
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'core.Serializers.CustomRegisterSerializer'
+}
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
