@@ -38,6 +38,6 @@ class ParticipateForm(models.Model):
     address = models.CharField(max_length=200)
     phone = PhoneField(unique=True)
     phone2 = PhoneField(unique=True)
-    photo = models.FileField('images')
+    image=models.ImageField(upload_to='match/profile')
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
