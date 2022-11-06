@@ -46,14 +46,16 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'drf_yasg',
-    'phonenumbers',
+    # 'phonenumbers',
     'movies',
     'accounts',
     'core',
     'useful_links',
     'match',
     'likes',
-    'message'
+    'message',
+    'django_twilio'
+
 ]
 SITE_ID = 1
 
@@ -167,7 +169,9 @@ JWT_AUTH_REFRESH_COOKIE = 'refresh'
 
 AUTH_USER_MODEL = 'core.User'
 
-
+AUTHENTICATION_BACKEND = (
+    'django.contrib.auth.backends.ModelBackend',
+)
 SIMPLE_JWT = {
 
 'AUTH_HEADER_TYPES': ('JWT',),

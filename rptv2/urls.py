@@ -25,7 +25,7 @@ from drf_yasg import openapi
 from rest_framework.authtoken import views
 from dj_rest_auth.views import PasswordResetConfirmView,PasswordResetView
 from message.views import *
-from core.views import ActivationView,AddPhoneView
+# from core.views import ActivationView,AddPhoneView
 schema_view = get_schema_view(
    openapi.Info(
       title="rptv2 API",
@@ -46,15 +46,15 @@ urlpatterns = [
     path('useful_links/',include('useful_links.urls')),
     path('user/', include('accounts.urls')),
     path('match/', include('match.urls')),
-    path('send_otp/',send_otp),
+    # path('send_otp/',send_otp),
     path('__debug__/', include('debug_toolbar.urls')),
 
 
     path('DjRestAuth/', include('dj_rest_auth.urls')),
     path('DjRestAuth/registration/', include('dj_rest_auth.registration.urls')),
-    path('DjRestAuth/registration/addphone', AddPhoneView.as_view()),
-    path('DjRestAuth/registration/activation', ActivationView.as_view()),
-    path('password/reset/', PasswordResetView.as_view(), name='rest_password_reset'),
+    # path('DjRestAuth/registration/addphone', AddPhoneView.as_view()),
+    # path('DjRestAuth/registration/activation', ActivationView.as_view()),
+    path('password/reset/', Password.as_view(), name='rest_password_reset'),
     path('DjRestAuth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('token/', views.obtain_auth_token),
 

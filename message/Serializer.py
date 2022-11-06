@@ -1,11 +1,10 @@
 from rest_framework import serializers
-from . import models
-class AddPhoneSerializer(serializers.ModelSerializer):
+from message.models import Score
+from core.models import User
+class PasswordSerializer(serializers.ModelSerializer):
     class Meta:
-        model=models.Score
-        fields = ['phone','user']
+        model=Score
+        fields=['phone']
 
-class ActivationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=models.Score
-        fields = ['otp','user']
+
+
