@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Movie, Seasons, Episodes, MoviesGenres, SeriesGenres, People, Series
+from .models import *
 
 
 @admin.register(Series)
@@ -35,6 +35,10 @@ class PeopleInLine(admin.TabularInline):
 @admin.register(Movie)
 class CrewsAdmin(admin.ModelAdmin):
     inlines = [PeopleInLine]
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Episodes)

@@ -46,14 +46,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'drf_yasg',
-    # 'phonenumbers',
+    'django_rest_passwordreset',
     'movies',
     'accounts',
     'core',
     'useful_links',
     'match',
     'likes',
-    'message',
     'django_twilio'
 
 ]

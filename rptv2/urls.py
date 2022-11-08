@@ -24,7 +24,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.authtoken import views
 from dj_rest_auth.views import PasswordResetConfirmView,PasswordResetView
-from message.views import *
+from core.views import *
 # from core.views import ActivationView,AddPhoneView
 schema_view = get_schema_view(
    openapi.Info(
@@ -52,10 +52,9 @@ urlpatterns = [
 
     path('DjRestAuth/', include('dj_rest_auth.urls')),
     path('DjRestAuth/registration/', include('dj_rest_auth.registration.urls')),
-    # path('DjRestAuth/registration/addphone', AddPhoneView.as_view()),
-    # path('DjRestAuth/registration/activation', ActivationView.as_view()),
-    path('password/reset/', Password.as_view(), name='rest_password_reset'),
-    path('DjRestAuth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('password/reset/', ForgotPassword.as_view(), name='rest_password_reset'),
+    path('DjRestAuth/password/reset/confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('password/reset/confirm/<user_id>', VerifyCode.as_view(), name='verify'),
     path('token/', views.obtain_auth_token),
 
 
