@@ -36,24 +36,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
+
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    'debug_toolbar',
+    'dj_rest_auth.registration',
+    'django_rest_passwordreset',
     'dj_rest_auth',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'dj_rest_auth.registration',
-    'drf_yasg',
-    'django_rest_passwordreset',
+
     'movies',
     'accounts',
     'core',
     'useful_links',
     'match',
     'likes',
-    'django_twilio'
 
 ]
 SITE_ID = 1
@@ -177,7 +178,5 @@ SIMPLE_JWT = {
 'USER_ID_FIELD': 'uid',
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
 }
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'core.Serializers.CustomRegisterSerializer'
-}
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
