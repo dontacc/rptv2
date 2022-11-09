@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,BaseUserManager
 from django.core.validators import RegexValidator
 import uuid
 
@@ -9,8 +9,9 @@ class User(AbstractUser):
     id_card = models.CharField(max_length=10, validators=[RegexValidator(r'^\d{10}$')],unique=True)
     is_active = models.BooleanField(default=True)
     phone_regex = RegexValidator(regex=r'^(\+98?)?{?(0?9[0-9]{9,9}}?)$')
-    phone = models.CharField(validators=[phone_regex], max_length=11, unique=True, null=True, blank=True)
+    phone = models.CharField(validators=[phone_regex], max_length=11, unique=True)
     REQUIRED_FIELDS = [ 'email', 'id_card','phone']
+
     class Meta:
         verbose_name='user'
         verbose_name_plural='users'
