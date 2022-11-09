@@ -1,11 +1,13 @@
 from rest_framework.views import APIView
 import random
 from django.urls import reverse
-from rest_framework.generics import RetrieveUpdateAPIView,UpdateAPIView
-from .Serializers import *
+from rest_framework.generics import UpdateAPIView
+from .Serializers import PasswordSerializer, VerifySerializer
 from django.http import HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework import status
+from core.models import User, password_reset_token_created
+
 
 class ForgotPassword(APIView):
     serializer_class = PasswordSerializer
@@ -35,12 +37,14 @@ class ForgotPassword(APIView):
                     return HttpResponseRedirect(
                         redirect_to='http://localhost:8000{}'.format(reverse('verify', kwargs={'user_id': str(a)})))
 
-        else:return Response('phone is not exist',status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response('phone is not exist', status=status.HTTP_404_NOT_FOUND)
 
 
 class VerifyCode(UpdateAPIView):
     serializer_class = VerifySerializer
     lookup_field = 'user_id'
+
     def get_queryset(self):
         pass
 

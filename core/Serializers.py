@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from allauth.account.adapter import DefaultAccountAdapter
-from .models import *
+from .models import User
 
 
 class CustomRegisterSerializer(RegisterSerializer):

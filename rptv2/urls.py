@@ -23,8 +23,8 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.authtoken import views
-from dj_rest_auth.views import PasswordResetConfirmView,PasswordResetView
-from core.views import *
+from dj_rest_auth.views import PasswordResetConfirmView
+from core.views import ForgotPassword,VerifyCode
 # from core.views import ActivationView,AddPhoneView
 schema_view = get_schema_view(
    openapi.Info(

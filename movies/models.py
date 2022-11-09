@@ -107,11 +107,11 @@ class Episodes(models.Model):
 class Cast(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    WOMAN = 'W'
-    MAN = 'M'
+    FEMALE = 'F'
+    MALE = 'M'
     GENDER_CHOICES = [
-        (WOMAN, 'Woman'),
-        (MAN, 'Man')
+        (FEMALE, 'Female'),
+        (MALE, 'Male')
     ]
     about = models.TextField()
     age = models.PositiveIntegerField()
