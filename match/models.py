@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from phone_field import PhoneField
 
 class VeiwerForm(models.Model):
     WOMAN = 'W'
