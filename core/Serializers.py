@@ -6,7 +6,7 @@ from .models import *
 
 class CustomRegisterSerializer(RegisterSerializer):
     phone = serializers.CharField()
-    id_card = serializers.CharField(max_length=10, validators=[RegexValidator(r'^\d{10}$')])
+    id_card = serializers.CharField(max_length=10)
 
     def get_cleaned_data(self):
         instance = {
