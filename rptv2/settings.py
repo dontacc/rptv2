@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
     'allauth',
     'allauth.account',
+    
+    'drf_yasg',
 
     'movies',
     'accounts',
