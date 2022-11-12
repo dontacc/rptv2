@@ -24,17 +24,17 @@ class Order(models.Model):
         (PAYMENT_TYPE_SIXMONTHLY, 'SIX MONTH'),
     ]
 
-    place_at = models.DateTimeField(auto_now_add=True)
-    payment_status = models.CharField(max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_TYPE_NONE)
-    type = models.CharField(max_length=1, choices=PAYMENT_TYPE_CHOICES, default=None)
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    place_at = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ خرید')
+    payment_status = models.CharField(max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_TYPE_NONE,verbose_name='وضعیت پرداخت')
+    type = models.CharField(max_length=1, choices=PAYMENT_TYPE_CHOICES, default=None,verbose_name='مدت اشتراک')
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT,verbose_name='کاربر')
 
     def __str__(self):
         return self.type
     class Meta:
-        verbose_name='order'
-        verbose_name_plural='orders'
+        verbose_name='خرید'
+        verbose_name_plural='خریدها'
 
 class OrderItem(models.Model):
-    order=models.ForeignKey(Order,on_delete=models.PROTECT)
-    user=models.OneToOneField(User,on_delete=models.PROTECT)
+    order=models.ForeignKey(Order,on_delete=models.PROTECT,verbose_name='درخواست')
+    user=models.OneToOneField(User,on_delete=models.PROTECT,verbose_name='کاربر')
