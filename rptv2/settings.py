@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ueggptl@m!7cz$#5m2lqyoc%%#e_$)cd*$6j_h^=&_ib@jsi5j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['rptv2.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -64,8 +64,8 @@ INSTALLED_APPS = [
 
 ]
 SITE_ID = 1
-CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
-CKEDITOR_UPLOAD_PATH = "uploads/"
+# CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
+# CKEDITOR_UPLOAD_PATH = "uploads/"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -156,7 +156,7 @@ MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
