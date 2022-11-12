@@ -33,7 +33,7 @@ class Movie(models.Model):
     description=models.CharField(max_length=255,verbose_name='توضیحات')
     image = models.ImageField(upload_to='film/movies',verbose_name='عکس')
     name = models.CharField(max_length=255,verbose_name='نام فیلم')
-    content = RichTextField()
+    content = RichTextField(blank=True,null=True,verbose_name='متن')
     release_date = models.CharField(max_length=255,verbose_name='تاریخ انتشار')
     genre = models.ManyToManyField(MoviesGenresItem,verbose_name='ژانر')
     rate = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)],verbose_name='امتیاز')
@@ -47,15 +47,12 @@ class Movie(models.Model):
 
 
 
-
-
-
 class Series(models.Model):
     title = models.CharField(max_length=255, verbose_name='موضوع')
     description = models.CharField(max_length=255, verbose_name='توضیحات')
     image = models.ImageField(upload_to='series/movies', verbose_name='عکس')
     name = models.CharField(max_length=255, verbose_name='نام سریال')
-    content = RichTextField()
+    content = RichTextField(blank=True,null=True,verbose_name='متن')
     start_at = models.CharField(max_length=255,verbose_name='')
     end_at = models.CharField(max_length=255,verbose_name='')
     genre = models.ManyToManyField(SeriesGenresItem,verbose_name='ژانر')
@@ -105,7 +102,7 @@ class Episodes(models.Model):
     create_at = models.DateTimeField(auto_now_add=True,verbose_name='')
 
     def __str__(self):
-        return self.title
+        return self.name
 
     class Meta:
         verbose_name = 'اپیزود'
